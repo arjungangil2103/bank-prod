@@ -1,0 +1,49 @@
+///
+sudo su -
+wget http://pkg.jenkins-ci.org/debian-stable/jenkins-ci.org.key 
+apt-key add jenkins-ci.org.key
+echo "deb http://pkg.jenkins-ci.org/debian binary/" > /etc/apt/sources.list.d/jenkins.list
+apt update
+apt upgrade
+apt install -y openjdk-8-jdk
+apt install -y nginx
+apt install -y jenkins
+systemctl status nginx | grep Active
+systemctl status jenkins | grep Active
+
+-------------
+sudo su -
+unlink /etc/nginx/sites-enabled/default
+vim /etc/nginx/conf.d/jenkins.conf
+
+upstream jenkins {
+        server 127.0.0.1:8080;
+}
+
+server {
+         listen 80 default_server;
+         location / {
+             proxy_pass http://jenkins;
+             proxy_set_header Host $host;
+             proxy_set_header X-Real-IP $remote_addr;
+        }
+}
+
+nginx -t
+systemctl reload nginx
+cat /var/lib/jenkins/secrets/initialAdminPassword
+
+5af20bb8267a4f1ab596f6b965538250
+
+username : virajetech/Abcd1234
+virajetechlivecareer@gmail.com
+
+
+email - javavirajetech@gmail.com
+
+Server Name:	
+email-smtp.us-east-1.amazonaws.com
+Port:	25, 465 or 587
+Use Transport Layer Security (TLS):	Yes
+Authentication:	Your SMTP credentials. See below for more informati
+
